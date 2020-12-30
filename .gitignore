@@ -1,0 +1,7 @@
+node_modules/
+cjs/
+es/
+
+.eslintcache
+package-lock.json
+.token
