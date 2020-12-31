@@ -1,34 +1,64 @@
-import { useCallback, useEffect, useState, useMemo } from 'react'
+import { useCallback, useState, useMemo } from 'react'
+import useControlledTokenPagination from './controlled'
 import { assertNumber } from './utils'
 
-export default function useUncontrolledTokenPagination(pageNumber) {
-  assertNumber('pageNumber', pageNumber)
+const DEFAULTS = {
+  defaultPageNumber: 1,
+  resetPageNumberOnPageSizeChange: true,
+}
 
-  const [mapping, setMapping] = useState({})
+export default function useUncontrolledTokenPagination(options) {
+  options = { ...DEFAULTS, ...options }
 
-  const updateToken = useCallback(
-    nextToken => {
-      setMapping(m => ({
-        ...m,
-        [pageNumber + 1]: nextToken,
-      }))
+  assertNumber('defaultPageNumber', options.defaultPageNumber)
+  assertNumber('defaultPageSize', options.defaultPageSize)
+
+  const [{ pageNumber, pageSize }, setPagination] = useState({
+    pageNumber: options.defaultPageNumber,
+    pageSize: options.defaultPageSize,
+  })
+
+  const change = useCallback(
+    (property, changer) => {
+      const pageNumberReset = options.resetPageNumberOnPageSizeChange
+        ? { pageNumber: options.defaultPageNumber }
+        : {}
+
+      switch (typeof changer) {
+        case 'function':
+          return setPagination(p => ({
+            ...p,
+            ...pageNumberReset,
+            [property]: changer(p[property]),
+          }))
+        case 'number':
+          return setPagination(p => ({
+            ...p,
+            ...pageNumberReset,
+            [property]: changer,
+          }))
+        default:
+          throw new Error(
+            `Unsupported value ${changer} of type ${typeof changer} for ${property}`
+          )
+      }
     },
-    [pageNumber]
+    [options.defaultPageNumber, options.resetPageNumberOnPageSizeChange]
   )
 
-  const useUpdateToken = useCallback(
-    function useUpdateToken(nextToken) {
-      useEffect(() => updateToken(nextToken), [nextToken])
-    },
-    [updateToken]
-  )
+  const changePageNumber = useCallback(c => change('pageNumber', c), [change])
+  const changePageSize = useCallback(c => change('pageSize', c), [change])
+
+  const controlled = useControlledTokenPagination(pageNumber)
 
   return useMemo(
     () => ({
-      currentToken: mapping[pageNumber],
-      useUpdateToken,
-      updateToken,
+      ...controlled,
+      pageNumber,
+      pageSize,
+      changePageNumber,
+      changePageSize,
     }),
-    [mapping, pageNumber, updateToken, useUpdateToken]
+    [changePageNumber, changePageSize, pageNumber, pageSize, controlled]
   )
 }

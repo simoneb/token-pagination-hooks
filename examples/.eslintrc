@@ -10,8 +10,8 @@
     "useTokenPagination": true,
     "Output": true,
     "Source": true,
-    "SimpleDeclarative": true,
-    "SimpleImperative": true,
-    "InternalState": true
+    "ControlledDeclarative": true,
+    "ControlledImperative": true,
+    "Uncontrolled": true
   }
 }

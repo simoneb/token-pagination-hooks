@@ -25,7 +25,7 @@ function Output({
         {'  '}
         {pageNumber}
         {'  '}
-        <button disabled={!data?.nextPage} onClick={nextPage}>
+        <button disabled={!nextPage || !data?.nextPage} onClick={nextPage}>
           &gt;&gt;
         </button>
       </div>
@@ -41,5 +41,5 @@ Output.propTypes = {
   pageSize: T.number.isRequired,
   changePageSize: T.func.isRequired,
   previousPage: T.func.isRequired,
-  nextPage: T.func.isRequired,
+  nextPage: T.func,
 }

@@ -2,8 +2,8 @@ import useControlledTokenPagination from './controlled'
 import useUncontrolledTokenPagination from './uncontrolled'
 
 const variants = {
-  number: useUncontrolledTokenPagination,
-  object: useControlledTokenPagination,
+  number: useControlledTokenPagination,
+  object: useUncontrolledTokenPagination,
 }
 
 export default function useTokenPagination(options) {

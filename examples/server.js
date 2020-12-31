@@ -28,7 +28,9 @@ function api(req, res) {
         : null,
   }
 
-  res.end(JSON.stringify(result))
+  setTimeout(() => {
+    res.end(JSON.stringify(result))
+  }, 1000)
 }
 
 function static(req, res) {

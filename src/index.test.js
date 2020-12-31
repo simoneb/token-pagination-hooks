@@ -8,19 +8,19 @@ import controlled from './controlled'
 import uncontrolled from './uncontrolled'
 
 describe('useTokenPagination', () => {
-  it('returns uncontrolled when a pageNumber is provided', async () => {
+  it('returns controlled when a pageNumber is provided', async () => {
     const { result } = renderHook(() => useTokenPagination(1))
 
-    expect(result.current).toBe('uncontrolled')
-    expect(uncontrolled).toHaveBeenCalledWith(1)
+    expect(result.current).toBe('controlled')
+    expect(controlled).toHaveBeenCalledWith(1)
   })
 
-  it('returns controlled when an object is provided', async () => {
+  it('returns uncontrolled when an object is provided', async () => {
     const arg = {}
     const { result } = renderHook(() => useTokenPagination(arg))
 
-    expect(result.current).toBe('controlled')
-    expect(controlled).toHaveBeenCalledWith(arg)
+    expect(result.current).toBe('uncontrolled')
+    expect(uncontrolled).toHaveBeenCalledWith(arg)
   })
 
   it('throws when an unknown input type is provided', async () => {

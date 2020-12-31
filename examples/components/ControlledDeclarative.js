@@ -1,19 +1,18 @@
 const { useState, useEffect } = React
 
-function InternalState() {
-  const {
-    currentToken,
-    useUpdateToken,
-    changePageNumber,
-    changePageSize,
-    pageNumber,
-    pageSize,
-  } = useTokenPagination({ defaultPageNumber: 1, defaultPageSize: 5 })
-
+function ControlledDeclarative() {
+  const [{ pageNumber, pageSize }, setPagination] = useState({
+    pageNumber: 1,
+    pageSize: 3,
+  })
+  const { currentToken, useUpdateToken } = useTokenPagination(pageNumber)
+  const [loading, setLoading] = useState(false)
   const [data, setData] = useState()
 
   useEffect(() => {
     async function fetchData() {
+      setLoading(true)
+
       const params = new URLSearchParams({ pageSize })
 
       if (currentToken) {
@@ -24,6 +23,7 @@ function InternalState() {
       const data = await res.json()
 
       setData(data)
+      setLoading(false)
     }
 
     fetchData()
@@ -32,13 +32,13 @@ function InternalState() {
   useUpdateToken(data?.nextPage)
 
   function previousPage() {
-    changePageNumber(n => n - 1)
+    setPagination(s => ({ ...s, pageNumber: pageNumber - 1 }))
   }
   function nextPage() {
-    changePageNumber(n => n + 1)
+    setPagination(s => ({ ...s, pageNumber: pageNumber + 1 }))
   }
-  function handleChangePageSize(e) {
-    changePageSize(+e.target.value)
+  function changePageSize(e) {
+    setPagination({ pageSize: e.target.value, pageNumber: 1 })
   }
 
   return (
@@ -46,11 +46,11 @@ function InternalState() {
       data={data}
       pageNumber={pageNumber}
       pageSize={pageSize}
-      changePageSize={handleChangePageSize}
+      changePageSize={changePageSize}
       previousPage={previousPage}
-      nextPage={nextPage}
+      nextPage={!loading && nextPage}
     />
   )
 }
 
-InternalState.propTypes = {}
+ControlledDeclarative.propTypes = {}

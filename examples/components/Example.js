@@ -1,10 +1,11 @@
-const choices = [SimpleDeclarative, SimpleImperative, InternalState].reduce(
-  (acc, c) => ({ ...acc, [c.name]: c }),
-  {}
-)
+const choices = [
+  ControlledDeclarative,
+  ControlledImperative,
+  Uncontrolled,
+].reduce((acc, c) => ({ ...acc, [c.name]: c }), {})
 
 function Example() {
-  const [choice, setChoice] = React.useState(SimpleDeclarative.name)
+  const [choice, setChoice] = React.useState(ControlledDeclarative.name)
 
   const Component = choices[choice]
 

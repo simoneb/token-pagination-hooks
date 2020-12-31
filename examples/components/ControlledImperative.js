@@ -1,16 +1,18 @@
 const { useState, useEffect } = React
 
-function SimpleImperative() {
+function ControlledImperative() {
   const [{ pageNumber, pageSize }, setPagination] = useState({
     pageNumber: 1,
     pageSize: 3,
   })
   const { currentToken, updateToken } = useTokenPagination(pageNumber)
-
+  const [loading, setLoading] = useState(false)
   const [data, setData] = useState()
 
   useEffect(() => {
     async function fetchData() {
+      setLoading(true)
+
       const params = new URLSearchParams({ pageSize })
 
       if (currentToken) {
@@ -23,6 +25,7 @@ function SimpleImperative() {
       updateToken(data.nextPage)
 
       setData(data)
+      setLoading(false)
     }
 
     fetchData()
@@ -45,9 +48,9 @@ function SimpleImperative() {
       pageSize={pageSize}
       changePageSize={changePageSize}
       previousPage={previousPage}
-      nextPage={nextPage}
+      nextPage={!loading && nextPage}
     />
   )
 }
 
-SimpleImperative.propTypes = {}
+ControlledImperative.propTypes = {}
