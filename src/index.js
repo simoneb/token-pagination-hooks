@@ -1,39 +1,16 @@
 import { useCallback, useEffect, useState } from 'react'
 
-export default function useTokenPagination(firstPage = 1) {
-  const [{ pageNumber, pageToToken }, setState] = useState({
-    pageNumber: firstPage,
-    pageToToken: {
-      [firstPage]: '',
-    },
+export default function useTokenPagination(pageNumber) {
+  const [state, setState] = useState({
+    [pageNumber]: '',
   })
-
-  const changePageNumber = useCallback(pageNumber => {
-    setState(s => ({
-      ...s,
-      pageNumber,
-    }))
-  }, [])
-
-  const changePageSize = useCallback(() => {
-    setState(s => ({
-      ...s,
-      pageNumber: firstPage,
-      pageToToken: {
-        [firstPage]: '',
-      },
-    }))
-  }, [firstPage])
 
   const useUpdateToken = useCallback(
     function useUpdateToken(nextToken = '') {
       useEffect(() => {
         setState(s => ({
           ...s,
-          pageToToken: {
-            ...s.pageToToken,
-            [pageNumber + 1]: nextToken,
-          },
+          [pageNumber + 1]: nextToken,
         }))
       }, [nextToken])
     },
@@ -41,10 +18,7 @@ export default function useTokenPagination(firstPage = 1) {
   )
 
   return {
-    pageNumber,
-    currentToken: pageToToken[pageNumber],
+    currentToken: state[pageNumber],
     useUpdateToken,
-    changePageNumber,
-    changePageSize,
   }
 }
