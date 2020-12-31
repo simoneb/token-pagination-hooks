@@ -1,6 +1,6 @@
 {
   "name": "token-pagination-hooks",
-  "version": "0.0.0",
+  "version": "0.0.1-0",
   "description": "React Hook for token based pagination",
   "author": "Simone Busoli <simone.busoli@nearform.com>",
   "repository": "simoneb/token-pagination-hooks",
