@@ -1,24 +1,17 @@
-import { useCallback, useEffect, useState } from 'react'
+import useControlledTokenPagination from './controlled'
+import useUncontrolledTokenPagination from './uncontrolled'
 
-export default function useTokenPagination(pageNumber) {
-  const [state, setState] = useState({
-    [pageNumber]: '',
-  })
+const variants = {
+  number: useUncontrolledTokenPagination,
+  object: useControlledTokenPagination,
+}
 
-  const useUpdateToken = useCallback(
-    function useUpdateToken(nextToken = '') {
-      useEffect(() => {
-        setState(s => ({
-          ...s,
-          [pageNumber + 1]: nextToken,
-        }))
-      }, [nextToken])
-    },
-    [pageNumber]
-  )
+export default function useTokenPagination(options) {
+  const variant = variants[typeof options]
 
-  return {
-    currentToken: state[pageNumber],
-    useUpdateToken,
+  if (!variant) {
+    throw new Error(`Unsupported options ${options} of type ${typeof options}`)
   }
+
+  return variant(options)
 }

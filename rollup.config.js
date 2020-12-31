@@ -11,6 +11,14 @@ export default {
       format: 'es',
     },
     {
+      dir: 'umd',
+      format: 'umd',
+      name: 'useTokenPagination',
+      globals: {
+        react: 'React',
+      },
+    },
+    {
       file: 'examples/umd.js',
       format: 'umd',
       name: 'useTokenPagination',

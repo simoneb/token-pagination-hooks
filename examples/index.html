@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>Example</title>
+    <script src="https://unpkg.com/react@17/umd/react.development.js"></script>
+    <script src="https://unpkg.com/react-dom@17/umd/react-dom.development.js"></script>
+    <script src="https://unpkg.com/prop-types@15/prop-types.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <script src="umd.js"></script>
+    <script type="text/babel" src="components/Output.js"></script>
+    <script type="text/babel" src="components/Source.js"></script>
+    <script type="text/babel" src="components/SimpleDeclarative.js"></script>
+    <script type="text/babel" src="components/SimpleImperative.js"></script>
+    <script type="text/babel" src="components/InternalState.js"></script>
+    <script type="text/babel" src="components/Example.js"></script>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="text/babel">
+      ReactDOM.render(<Example />, document.getElementById('root'))
+    </script>
+  </body>
+</html>

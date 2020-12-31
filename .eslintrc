@@ -8,7 +8,14 @@
     "plugin:react-hooks/recommended"
   ],
   "env": {
+    "browser": true,
     "node": true,
-    "es6": true
+    "es6": true,
+    "jest": true
+  },
+  "settings": {
+    "react": {
+      "version": "detect"
+    }
   }
 }

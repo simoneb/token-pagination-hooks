@@ -1,0 +1,17 @@
+{
+  "env": {
+    "browser": true,
+    "node": true
+  },
+  "parserOptions": { "sourceType": "script" },
+  "globals": {
+    "React": true,
+    "PropTypes": true,
+    "useTokenPagination": true,
+    "Output": true,
+    "Source": true,
+    "SimpleDeclarative": true,
+    "SimpleImperative": true,
+    "InternalState": true
+  }
+}

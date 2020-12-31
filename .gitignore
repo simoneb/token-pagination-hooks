@@ -1,6 +1,8 @@
 node_modules/
 cjs/
 es/
+umd/
+coverage/
 
 .eslintcache
 package-lock.json

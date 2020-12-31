@@ -1,6 +1,6 @@
 {
   "name": "token-pagination-hooks",
-  "version": "1.0.0",
+  "version": "0.0.0",
   "description": "React Hook for token based pagination",
   "author": "Simone Busoli <simone.busoli@nearform.com>",
   "repository": "simoneb/token-pagination-hooks",
@@ -9,11 +9,12 @@
   "files": [
     "cjs/",
     "es/",
+    "umd/",
     "src/"
   ],
   "scripts": {
     "dev": "npm run build:watch",
-    "clean": "rimraf cjs es",
+    "clean": "rimraf cjs es umd",
     "prepare": "npm run clean && npm run build",
     "build": "rollup -c",
     "build:watch": "rollup -c -w",
@@ -21,15 +22,25 @@
     "lint:fix": "eslint . --fix",
     "release": "dotenv -e .token release-it --",
     "toc": "markdown-toc README.md -i",
-    "test": "echo test",
+    "test": "jest",
     "example": "node examples/server.js"
   },
-  "keywords": [],
+  "keywords": [
+    "react",
+    "pagination",
+    "token pagination"
+  ],
   "license": "ISC",
   "devDependencies": {
+    "@babel/core": "^7.12.10",
+    "@babel/preset-env": "^7.12.11",
+    "@babel/preset-react": "^7.12.10",
     "@commitlint/cli": "^11.0.0",
     "@commitlint/config-conventional": "^11.0.0",
+    "@testing-library/react": "^11.2.2",
+    "@testing-library/react-hooks": "^3.7.0",
     "babel-eslint": "^10.1.0",
+    "babel-jest": "^26.6.3",
     "dotenv-cli": "^4.0.0",
     "eslint": "^7.16.0",
     "eslint-config-prettier": "^7.1.0",
@@ -43,6 +54,8 @@
     "markdown-toc": "^1.2.0",
     "prettier": "^2.2.1",
     "react": "^17.0.1",
+    "react-test-renderer": "^17.0.1",
+    "regenerator-runtime": "^0.13.7",
     "release-it": "^14.2.2",
     "rollup": "^2.35.1"
   },
