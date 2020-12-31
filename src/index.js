@@ -1,5 +1,6 @@
 import useControlledTokenPagination from './controlled'
 import useUncontrolledTokenPagination from './uncontrolled'
+import * as persisters from './persisters'
 
 const variants = {
   number: useControlledTokenPagination,
@@ -15,3 +16,5 @@ export default function useTokenPagination(options) {
 
   return variant(options)
 }
+
+Object.assign(useTokenPagination, persisters)

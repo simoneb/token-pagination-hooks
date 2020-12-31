@@ -1,10 +1,20 @@
 import { useCallback, useEffect, useState, useMemo } from 'react'
+import { NULL_PERSISTER } from './persisters'
 import { assertNumber } from './utils'
 
-export default function useControlledTokenPagination(pageNumber) {
+const DEFAULTS = {
+  persister: NULL_PERSISTER,
+}
+
+export default function useControlledTokenPagination(pageNumber, options) {
+  options = { ...DEFAULTS, ...options }
+
   assertNumber('pageNumber', pageNumber)
 
-  const [mapping, setMapping] = useState({})
+  const [mapping, setMapping] = useState(() => {
+    const { mapping } = options.persister.hydrate()
+    return mapping || {}
+  })
 
   const updateToken = useCallback(
     nextToken => {
@@ -22,6 +32,10 @@ export default function useControlledTokenPagination(pageNumber) {
     },
     [updateToken]
   )
+
+  useEffect(() => {
+    options.persister.persist({ mapping })
+  }, [options.persister, mapping])
 
   return useMemo(
     () => ({

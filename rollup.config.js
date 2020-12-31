@@ -5,6 +5,7 @@ export default {
       dir: 'cjs',
       format: 'cjs',
       exports: 'default',
+      esModule: false,
     },
     {
       dir: 'es',

@@ -12,6 +12,7 @@
     "Source": true,
     "ControlledDeclarative": true,
     "ControlledImperative": true,
-    "Uncontrolled": true
+    "Uncontrolled": true,
+    "Persistence": true
   }
 }

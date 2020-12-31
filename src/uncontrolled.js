@@ -1,11 +1,15 @@
-import { useCallback, useState, useMemo } from 'react'
+import { useCallback, useState, useMemo, useEffect } from 'react'
 import useControlledTokenPagination from './controlled'
+import { NULL_PERSISTER } from './persisters'
 import { assertNumber } from './utils'
 
 const DEFAULTS = {
   defaultPageNumber: 1,
   resetPageNumberOnPageSizeChange: true,
+  persister: NULL_PERSISTER,
 }
+
+const changerTypes = ['function', 'number']
 
 export default function useUncontrolledTokenPagination(options) {
   options = { ...DEFAULTS, ...options }
@@ -13,42 +17,51 @@ export default function useUncontrolledTokenPagination(options) {
   assertNumber('defaultPageNumber', options.defaultPageNumber)
   assertNumber('defaultPageSize', options.defaultPageSize)
 
-  const [{ pageNumber, pageSize }, setPagination] = useState({
-    pageNumber: options.defaultPageNumber,
-    pageSize: options.defaultPageSize,
+  const [{ pageNumber, pageSize }, setPagination] = useState(() => {
+    const { pageNumber, pageSize } = options.persister.hydrate()
+
+    return {
+      pageNumber: pageNumber || options.defaultPageNumber,
+      pageSize: pageSize || options.defaultPageSize,
+    }
   })
 
   const change = useCallback(
     (property, changer) => {
       const pageNumberReset = options.resetPageNumberOnPageSizeChange
         ? { pageNumber: options.defaultPageNumber }
-        : {}
+        : null
 
       const changerType = typeof changer
 
-      if (!['function', 'number'].includes(changerType)) {
+      if (!changerTypes.includes(changerType)) {
         throw new Error(
-          `Unsupported value ${changer} of type ${changerType} for ${property}`
+          `Unsupported value ${changer} of type ${changerType} for ${property}. Supported values are ${changerTypes}`
         )
       }
 
-      const paginate = p => {
-        return {
-          ...p,
-          ...pageNumberReset,
-          [property]: changerType === 'number' ? changer : changer(p[property]),
-        }
-      }
-
-      setPagination(paginate)
+      setPagination(p => ({
+        ...p,
+        ...pageNumberReset,
+        [property]: changerType === 'function' ? changer(p[property]) : changer,
+      }))
     },
     [options.defaultPageNumber, options.resetPageNumberOnPageSizeChange]
   )
 
-  const changePageNumber = useCallback(c => change('pageNumber', c), [change])
-  const changePageSize = useCallback(c => change('pageSize', c), [change])
+  const changePageNumber = useCallback(
+    changer => change('pageNumber', changer),
+    [change]
+  )
+  const changePageSize = useCallback(changer => change('pageSize', changer), [
+    change,
+  ])
 
-  const controlled = useControlledTokenPagination(pageNumber)
+  const controlled = useControlledTokenPagination(pageNumber, options)
+
+  useEffect(() => {
+    options.persister.persist({ pageNumber, pageSize })
+  }, [options.persister, pageNumber, pageSize])
 
   return useMemo(
     () => ({

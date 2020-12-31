@@ -2,6 +2,7 @@ const choices = [
   ControlledDeclarative,
   ControlledImperative,
   Uncontrolled,
+  Persistence,
 ].reduce((acc, c) => ({ ...acc, [c.name]: c }), {})
 
 function Example() {
