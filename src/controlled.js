@@ -28,6 +28,7 @@ export default function useControlledTokenPagination(pageNumber) {
       currentToken: mapping[pageNumber],
       useUpdateToken,
       updateToken,
+      hasToken: pageNumber => pageNumber in mapping,
     }),
     [mapping, pageNumber, updateToken, useUpdateToken]
   )

@@ -24,24 +24,23 @@ export default function useUncontrolledTokenPagination(options) {
         ? { pageNumber: options.defaultPageNumber }
         : {}
 
-      switch (typeof changer) {
-        case 'function':
-          return setPagination(p => ({
-            ...p,
-            ...pageNumberReset,
-            [property]: changer(p[property]),
-          }))
-        case 'number':
-          return setPagination(p => ({
-            ...p,
-            ...pageNumberReset,
-            [property]: changer,
-          }))
-        default:
-          throw new Error(
-            `Unsupported value ${changer} of type ${typeof changer} for ${property}`
-          )
+      const changerType = typeof changer
+
+      if (!['function', 'number'].includes(changerType)) {
+        throw new Error(
+          `Unsupported value ${changer} of type ${changerType} for ${property}`
+        )
       }
+
+      const paginate = p => {
+        return {
+          ...p,
+          ...pageNumberReset,
+          [property]: changerType === 'number' ? changer : changer(p[property]),
+        }
+      }
+
+      setPagination(paginate)
     },
     [options.defaultPageNumber, options.resetPageNumberOnPageSizeChange]
   )

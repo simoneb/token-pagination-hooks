@@ -16,7 +16,13 @@ describe('controlled', () => {
     expect(result.current.currentToken).toBe(undefined)
   })
 
-  it('updates the token declaratively', async () => {
+  it('does not have token for page', () => {
+    const { result } = renderHook(() => useControlled(1))
+
+    expect(result.current.hasToken(1)).toBe(false)
+  })
+
+  it('updates the token declaratively', () => {
     const { result, rerender } = renderHook(props => useControlled(props), {
       initialProps: 1,
     })
@@ -30,7 +36,7 @@ describe('controlled', () => {
     expect(result.current.currentToken).toBe('next')
   })
 
-  it('updates the token imperatively', async () => {
+  it('updates the token imperatively', () => {
     const { result, rerender } = renderHook(props => useControlled(props), {
       initialProps: 1,
     })
@@ -42,5 +48,15 @@ describe('controlled', () => {
     rerender(2)
 
     expect(result.current.currentToken).toBe('next')
+  })
+
+  it('has token for next page', () => {
+    const { result } = renderHook(() => useControlled(1))
+
+    const { updateToken } = result.current
+
+    act(() => updateToken('next'))
+
+    expect(result.current.hasToken(2)).toBe(true)
   })
 })

@@ -5,14 +5,13 @@ function ControlledDeclarative() {
     pageNumber: 1,
     pageSize: 3,
   })
-  const { currentToken, useUpdateToken } = useTokenPagination(pageNumber)
-  const [loading, setLoading] = useState(false)
+  const { currentToken, useUpdateToken, hasToken } = useTokenPagination(
+    pageNumber
+  )
   const [data, setData] = useState()
 
   useEffect(() => {
     async function fetchData() {
-      setLoading(true)
-
       const params = new URLSearchParams({ pageSize })
 
       if (currentToken) {
@@ -23,7 +22,6 @@ function ControlledDeclarative() {
       const data = await res.json()
 
       setData(data)
-      setLoading(false)
     }
 
     fetchData()
@@ -48,7 +46,7 @@ function ControlledDeclarative() {
       pageSize={pageSize}
       changePageSize={changePageSize}
       previousPage={previousPage}
-      nextPage={!loading && nextPage}
+      nextPage={hasToken(pageNumber + 1) ? nextPage : undefined}
     />
   )
 }

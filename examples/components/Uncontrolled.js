@@ -3,19 +3,17 @@ const { useState, useEffect } = React
 function Uncontrolled() {
   const {
     currentToken,
+    hasToken,
     useUpdateToken,
     changePageNumber,
     changePageSize,
     pageNumber,
     pageSize,
   } = useTokenPagination({ defaultPageNumber: 1, defaultPageSize: 5 })
-  const [loading, setLoading] = useState(false)
   const [data, setData] = useState()
 
   useEffect(() => {
     async function fetchData() {
-      setLoading(true)
-
       const params = new URLSearchParams({ pageSize })
 
       if (currentToken) {
@@ -26,7 +24,6 @@ function Uncontrolled() {
       const data = await res.json()
 
       setData(data)
-      setLoading(false)
     }
 
     fetchData()
@@ -51,7 +48,7 @@ function Uncontrolled() {
       pageSize={pageSize}
       changePageSize={handleChangePageSize}
       previousPage={previousPage}
-      nextPage={!loading && nextPage}
+      nextPage={hasToken(pageNumber + 1) ? nextPage : undefined}
     />
   )
 }

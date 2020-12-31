@@ -5,14 +5,11 @@ function ControlledImperative() {
     pageNumber: 1,
     pageSize: 3,
   })
-  const { currentToken, updateToken } = useTokenPagination(pageNumber)
-  const [loading, setLoading] = useState(false)
+  const { currentToken, updateToken, hasToken } = useTokenPagination(pageNumber)
   const [data, setData] = useState()
 
   useEffect(() => {
     async function fetchData() {
-      setLoading(true)
-
       const params = new URLSearchParams({ pageSize })
 
       if (currentToken) {
@@ -25,7 +22,6 @@ function ControlledImperative() {
       updateToken(data.nextPage)
 
       setData(data)
-      setLoading(false)
     }
 
     fetchData()
@@ -48,7 +44,7 @@ function ControlledImperative() {
       pageSize={pageSize}
       changePageSize={changePageSize}
       previousPage={previousPage}
-      nextPage={!loading && nextPage}
+      nextPage={hasToken(pageNumber + 1) ? nextPage : undefined}
     />
   )
 }
