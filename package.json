@@ -6,6 +6,7 @@
   "repository": "simoneb/token-pagination-hooks",
   "main": "cjs/index.js",
   "module": "es/index.js",
+  "unpkg": "umd/index.js",
   "files": [
     "cjs/",
     "es/",
