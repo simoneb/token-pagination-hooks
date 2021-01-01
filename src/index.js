@@ -7,14 +7,14 @@ const variants = {
   object: useUncontrolledTokenPagination,
 }
 
-export default function useTokenPagination(options) {
+export default function useTokenPagination(options, persister) {
   const variant = variants[typeof options]
 
   if (!variant) {
     throw new Error(`Unsupported options ${options} of type ${typeof options}`)
   }
 
-  return variant(options)
+  return variant(options, persister)
 }
 
 Object.assign(useTokenPagination, persisters)

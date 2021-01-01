@@ -9,11 +9,13 @@ function Persistence() {
     changePageSize,
     pageNumber,
     pageSize,
-  } = useTokenPagination({
-    defaultPageNumber: 1,
-    defaultPageSize: 5,
-    persister: useTokenPagination.localPersister('persistence'),
-  })
+  } = useTokenPagination(
+    {
+      defaultPageNumber: 1,
+      defaultPageSize: 5,
+    },
+    useTokenPagination.sessionPersister('persistence')
+  )
   const [data, setData] = useState()
 
   useEffect(() => {

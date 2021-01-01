@@ -6,19 +6,21 @@ import { assertNumber } from './utils'
 const DEFAULTS = {
   defaultPageNumber: 1,
   resetPageNumberOnPageSizeChange: true,
-  persister: NULL_PERSISTER,
 }
 
 const changerTypes = ['function', 'number']
 
-export default function useUncontrolledTokenPagination(options) {
+export default function useUncontrolledTokenPagination(
+  options,
+  persister = NULL_PERSISTER
+) {
   options = { ...DEFAULTS, ...options }
 
   assertNumber('defaultPageNumber', options.defaultPageNumber)
   assertNumber('defaultPageSize', options.defaultPageSize)
 
   const [{ pageNumber, pageSize }, setPagination] = useState(() => {
-    const { pageNumber, pageSize } = options.persister.hydrate()
+    const { pageNumber, pageSize } = persister.hydrate()
 
     return {
       pageNumber: pageNumber || options.defaultPageNumber,
@@ -57,11 +59,11 @@ export default function useUncontrolledTokenPagination(options) {
     change,
   ])
 
-  const controlled = useControlledTokenPagination(pageNumber, options)
+  const controlled = useControlledTokenPagination(pageNumber, persister)
 
   useEffect(() => {
-    options.persister.persist({ pageNumber, pageSize })
-  }, [options.persister, pageNumber, pageSize])
+    persister.persist({ pageNumber, pageSize })
+  }, [persister, pageNumber, pageSize])
 
   return useMemo(
     () => ({

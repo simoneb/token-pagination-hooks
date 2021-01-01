@@ -12,7 +12,7 @@ describe('useTokenPagination', () => {
     const { result } = renderHook(() => useTokenPagination(1))
 
     expect(result.current).toBe('controlled')
-    expect(controlled).toHaveBeenCalledWith(1)
+    expect(controlled).toHaveBeenCalledWith(1, undefined)
   })
 
   it('returns uncontrolled when an object is provided', async () => {
@@ -20,7 +20,7 @@ describe('useTokenPagination', () => {
     const { result } = renderHook(() => useTokenPagination(arg))
 
     expect(result.current).toBe('uncontrolled')
-    expect(uncontrolled).toHaveBeenCalledWith(arg)
+    expect(uncontrolled).toHaveBeenCalledWith(arg, undefined)
   })
 
   it('throws when an unknown input type is provided', async () => {
