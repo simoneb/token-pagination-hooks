@@ -10,6 +10,11 @@ React Hooks library to use classic pagination in the frontend with a token-based
 
 <!-- toc -->
 
+- [Setup](#setup)
+- [Quickstart](#quickstart)
+  * [API](#api)
+  * [Client](#client)
+
 <!-- tocstop -->
 
 ## Setup
