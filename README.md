@@ -12,8 +12,17 @@ React Hooks library to use classic pagination in a frontend, based on page numbe
 
 - [Setup](#setup)
 - [Quickstart](#quickstart)
-  * [API](#api)
-  * [Client](#client)
+  * [Backend](#backend)
+  * [Frontend](#frontend)
+- [Running the examples](#running-the-examples)
+- [API](#api)
+- [Usage](#usage)
+  * [Token update](#token-update)
+    + [Declarative](#declarative)
+    + [Imperative](#imperative)
+  * [Modes](#modes)
+    + [Controlled](#controlled)
+    + [Uncontrolled](#uncontrolled)
 
 <!-- tocstop -->
 
