@@ -6,23 +6,24 @@
 [![bundlephobia](https://badgen.net/bundlephobia/minzip/token-pagination-hooks)](https://bundlephobia.com/result?p=token-pagination-hooks)
 [![bundlephobia](https://badgen.net/bundlephobia/dependency-count/token-pagination-hooks)](https://bundlephobia.com/result?p=token-pagination-hooks)
 
-React Hooks library to use classic pagination in a frontend, based on page number and page size, with a token-based paginatiom backend.
+React Hooks library to use classic pagination in a frontend, based on page number and page size, with a token-based pagination backend.
 
 <!-- toc -->
 
-- [Setup](#setup)
-- [Quickstart](#quickstart)
-  * [Backend](#backend)
-  * [Frontend](#frontend)
-- [Running the examples](#running-the-examples)
-- [API](#api)
-- [Usage](#usage)
-  * [Token update](#token-update)
-    + [Declarative](#declarative)
-    + [Imperative](#imperative)
-  * [Modes](#modes)
-    + [Controlled](#controlled)
-    + [Uncontrolled](#uncontrolled)
+- [token-pagination-hooks](#token-pagination-hooks)
+  - [Setup](#setup)
+  - [Quickstart](#quickstart)
+    - [Backend](#backend)
+    - [Frontend](#frontend)
+  - [Running the examples](#running-the-examples)
+  - [API](#api)
+  - [Usage](#usage)
+    - [Token update](#token-update)
+      - [Declarative](#declarative)
+      - [Imperative](#imperative)
+    - [Modes](#modes)
+      - [Controlled](#controlled)
+      - [Uncontrolled](#uncontrolled)
 
 <!-- tocstop -->
 
