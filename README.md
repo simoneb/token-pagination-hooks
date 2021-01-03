@@ -10,19 +10,21 @@ React Hooks library to use classic pagination in a frontend, based on page numbe
 
 <!-- toc -->
 
-- [Setup](#setup)
-- [Quickstart](#quickstart)
-  * [Backend](#backend)
-  * [Frontend](#frontend)
-- [Running the examples](#running-the-examples)
-- [API](#api)
-- [Usage](#usage)
-  * [Token update](#token-update)
-    + [Declarative](#declarative)
-    + [Imperative](#imperative)
-  * [Modes](#modes)
-    + [Controlled](#controlled)
-    + [Uncontrolled](#uncontrolled)
+- [token-pagination-hooks](#token-pagination-hooks)
+  - [Setup](#setup)
+  - [Quickstart](#quickstart)
+    - [Backend](#backend)
+    - [Frontend](#frontend)
+  - [Running the examples](#running-the-examples)
+  - [API](#api)
+  - [Usage](#usage)
+    - [Token update](#token-update)
+      - [Declarative](#declarative)
+      - [Imperative](#imperative)
+    - [Modes](#modes)
+      - [Controlled](#controlled)
+      - [Uncontrolled](#uncontrolled)
+    - [Persistence](#persistence)
 
 <!-- tocstop -->
 
@@ -296,3 +298,7 @@ const { data, nextPage } = useYourApi()
 // inform  the hook of the token to take you from the current page to the next
 useUpdateToken(nextPage)
 ```
+
+### Persistence
+
+TBD
