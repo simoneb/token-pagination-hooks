@@ -123,15 +123,10 @@ The repository contains several examples showing different usage scenarios. To r
 ## API
 
 ```jsx
-import useTokenPagination, { 
-  localPersister, 
-  sessionPersister 
-} from 'token-pagination-hooks'
-
-const persister = localPersister('key') // OR sessionPersister('key')
+import useTokenPagination from 'token-pagination-hooks'
 
 function Component() {
-  const result = useTokenPagination(options, persister?)
+  const result = useTokenPagination(options[, stateHookFactory])
 }
 ```
 
@@ -156,17 +151,13 @@ function Component() {
 
       Whether to reset the page number when the page size changes.
 
-- `persister` - `object` - **Optional**
-  
-  An optional persister to store the pagination state for later retrieval. Some persisters are provided with the library and others can be implemented by providing an object (or an instance of a class) adhering to the following interface:
+- `stateHookFactory` - `(key: string) => function` - **Optional**
 
-    - `persister.hydrate` - `() => object`
-      
-      Method that is called to read the pagination data from the persistent store.
+  An optional factory for the state Hook which defaults to a function returning `React.useState`.
 
-    - `persister.persist` - `object => void`
+  It can be customized to provide a Hook which stores the state in a persistent store, like browser storage.
 
-      Method that is called with an object representing the pagination state and which should persist it to the persistent store for later retrieval.
+  It should be a function which accepts a unique key and returns a Hook implementation.
 
 - `result` - `object`
   
@@ -306,6 +297,3 @@ const { data, nextPage } = useYourApi()
 // inform  the hook of the token to take you from the current page to the next
 useUpdateToken(nextPage)
 ```
-
-
-
