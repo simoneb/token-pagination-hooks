@@ -291,7 +291,6 @@ const {
   pageSize,
 } = useTokenPagination({ defaultPageNumber: 1, defaultPageSize: 5 })
 
-
 // invoke your API which returns the token for the next page, e.g.
 const { data, nextPage } = useYourApi()
 
