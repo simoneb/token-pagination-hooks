@@ -1,5 +1,25 @@
 const { useState, useEffect } = React
 
+function makeStateHookFactory(prefix) {
+  return function makeStateHook(key) {
+    const id = [prefix, key].join('-')
+
+    return function useSessionStorageState(initializer) {
+      const result = useState(
+        JSON.parse(sessionStorage.getItem(id) || 'null') || initializer
+      )
+
+      const [state] = result
+
+      useEffect(() => {
+        sessionStorage.setItem(id, JSON.stringify(state))
+      }, [state])
+
+      return result
+    }
+  }
+}
+
 function Persistence() {
   const {
     currentToken,
@@ -14,7 +34,7 @@ function Persistence() {
       defaultPageNumber: 1,
       defaultPageSize: 5,
     },
-    useTokenPagination.sessionPersister('persistence')
+    makeStateHookFactory('persistence')
   )
   const [data, setData] = useState()
 

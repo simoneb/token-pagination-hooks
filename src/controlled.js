@@ -1,17 +1,15 @@
-import { useCallback, useEffect, useState, useMemo } from 'react'
-import { NULL_PERSISTER } from './persisters'
+import React, { useCallback, useEffect, useMemo } from 'react'
 import { assertNumber } from './utils'
 
 export default function useControlledTokenPagination(
   pageNumber,
-  persister = NULL_PERSISTER
+  stateHookFactory = () => React.useState
 ) {
   assertNumber('pageNumber', pageNumber)
 
-  const [mapping, setMapping] = useState(() => {
-    const { mapping } = persister.hydrate()
-    return mapping || {}
-  })
+  const useState = stateHookFactory('controlled')
+
+  const [mapping, setMapping] = useState({})
 
   const updateToken = useCallback(
     nextToken => {
@@ -29,10 +27,6 @@ export default function useControlledTokenPagination(
     },
     [updateToken]
   )
-
-  useEffect(() => {
-    persister.persist({ mapping })
-  }, [persister, mapping])
 
   return useMemo(
     () => ({

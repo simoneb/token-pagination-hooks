@@ -5,7 +5,6 @@ export default {
       dir: 'cjs',
       format: 'cjs',
       exports: 'default',
-      esModule: false,
     },
     {
       dir: 'es',
@@ -20,7 +19,7 @@ export default {
       },
     },
     {
-      file: 'examples/umd.js',
+      file: 'examples/assets/token-pagination-hooks.js',
       format: 'umd',
       name: 'useTokenPagination',
       globals: {

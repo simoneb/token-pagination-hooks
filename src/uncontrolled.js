@@ -1,6 +1,6 @@
-import { useCallback, useState, useMemo, useEffect } from 'react'
+import React, { useCallback, useMemo } from 'react'
+
 import useControlledTokenPagination from './controlled'
-import { NULL_PERSISTER } from './persisters'
 import { assertNumber } from './utils'
 
 const DEFAULTS = {
@@ -12,20 +12,18 @@ const changerTypes = ['function', 'number']
 
 export default function useUncontrolledTokenPagination(
   options,
-  persister = NULL_PERSISTER
+  stateHookFactory = () => React.useState
 ) {
   options = { ...DEFAULTS, ...options }
 
   assertNumber('defaultPageNumber', options.defaultPageNumber)
   assertNumber('defaultPageSize', options.defaultPageSize)
 
-  const [{ pageNumber, pageSize }, setPagination] = useState(() => {
-    const { pageNumber, pageSize } = persister.hydrate()
+  const useState = stateHookFactory('uncontrolled')
 
-    return {
-      pageNumber: pageNumber || options.defaultPageNumber,
-      pageSize: pageSize || options.defaultPageSize,
-    }
+  const [{ pageNumber, pageSize }, setPagination] = useState({
+    pageNumber: options.defaultPageNumber,
+    pageSize: options.defaultPageSize,
   })
 
   const change = useCallback(
@@ -59,11 +57,7 @@ export default function useUncontrolledTokenPagination(
     change,
   ])
 
-  const controlled = useControlledTokenPagination(pageNumber, persister)
-
-  useEffect(() => {
-    persister.persist({ pageNumber, pageSize })
-  }, [persister, pageNumber, pageSize])
+  const controlled = useControlledTokenPagination(pageNumber, stateHookFactory)
 
   return useMemo(
     () => ({
