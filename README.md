@@ -10,21 +10,22 @@ React Hooks library to use classic pagination in a frontend, based on page numbe
 
 <!-- toc -->
 
-- [Setup](#setup)
-- [Quickstart](#quickstart)
-  * [Backend](#backend)
-  * [Frontend](#frontend)
-- [Running the examples](#running-the-examples)
-- [API](#api)
-- [Usage](#usage)
-  * [Token update](#token-update)
-    + [Declarative](#declarative)
-    + [Imperative](#imperative)
-  * [Modes](#modes)
-    + [Controlled](#controlled)
-    + [Uncontrolled](#uncontrolled)
-  * [Persistence](#persistence)
-    + [A working example](#a-working-example)
+- [token-pagination-hooks](#token-pagination-hooks)
+  - [Setup](#setup)
+  - [Quickstart](#quickstart)
+    - [Backend](#backend)
+    - [Frontend](#frontend)
+  - [Running the examples](#running-the-examples)
+  - [API](#api)
+  - [Usage](#usage)
+    - [Token update](#token-update)
+      - [Declarative](#declarative)
+      - [Imperative](#imperative)
+    - [Modes](#modes)
+      - [Controlled](#controlled)
+      - [Uncontrolled](#uncontrolled)
+    - [Persistence](#persistence)
+      - [A working example](#a-working-example)
 
 <!-- tocstop -->
 
@@ -310,7 +311,7 @@ This can be customized providing a `stateHookFactory` as the second argument to 
 const result = useTokenPagination(1, stateHookFactory)
 ```
 
-`stateHookFactory` is a function which takes a unique key and returns a Reac Hook whose API is the same as React's `useState` Hook.
+`stateHookFactory` is a function which takes a unique key and returns a React Hook whose API is the same as React's `useState` Hook.
 
 For example, if you wanted to persist data in the browser's `sessionStorage`, you could write a Hook like this:
 
