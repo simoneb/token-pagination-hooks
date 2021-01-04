@@ -25,6 +25,7 @@ React Hooks library to use classic pagination in a frontend, based on page numbe
       - [Controlled](#controlled)
       - [Uncontrolled](#uncontrolled)
     - [Persistence](#persistence)
+      - [A working example](#a-working-example)
 
 <!-- tocstop -->
 
@@ -300,4 +301,88 @@ useUpdateToken(nextPage)
 
 ### Persistence
 
-TBD
+> An ideal complement to this library is [navigation-state-hooks](https://github.com/simoneb/navigation-state-hooks), which allows storing navigation state. In this way you can store pagination state per route, so when you navigate back to that route you can show the user the same page he was previously viewing.
+
+By default the pagination state is kept in the component state using React's `useState` Hook.
+
+This can be customized providing a `stateHookFactory` as the second argument to the Hook.
+
+```jsx
+const result = useTokenPagination(1, stateHookFactory)
+```
+
+`stateHookFactory` is a function which takes a unique key and returns a Reac Hook whose API is the same as React's `useState` Hook.
+
+For example, if you wanted to persist data in the browser's `sessionStorage`, you could write a Hook like this:
+
+```jsx
+function makeStateHook(key) {
+  return function useSessionStorageState(initializer) {
+    const result = useState(
+      JSON.parse(sessionStorage.getItem(key) || 'null') ?? initializer
+    )
+
+    const [state] = result
+
+    useEffect(() => {
+      sessionStorage.setItem(key, JSON.stringify(state))
+    }, [state])
+
+    return result
+  }
+}
+```
+
+When invoking the above `makeStateHook` function with:
+
+```jsx
+const useSessionStorageState = makeStateHook('some-key')
+```
+
+you obtain a Hook which has the same interface as React's `useState` Hook and which loads the initial state and persist any subsequent state changes to the browser's `sessionStorage` with the key `some-key`.
+
+To use such a Hook in this library you need to take one step further because the library needs to be able to store multiple keys, so it needs a prefix and a key.
+
+#### A working example
+
+The final implementation looks like:
+
+```jsx
+function makeStateHookFactory(prefix) {
+  return function makeStateHook(key) {
+    const id = [prefix, key].join('-')
+
+    return function useSessionStorageState(initializer) {
+      const result = useState(
+        JSON.parse(sessionStorage.getItem(id) || 'null') ?? initializer
+      )
+
+      const [state] = result
+
+      useEffect(() => {
+        sessionStorage.setItem(id, JSON.stringify(state))
+      }, [state])
+
+      return result
+    }
+  }
+}
+```
+
+and it can be used as:
+
+```jsx
+const stateHookFactory = makeStateHookFactory('session-storage-key')
+
+function Component() {
+  const result = useTokenPagination(1, stateHookFactory)
+
+  ...
+}
+
+```
+
+A working example of persistence in action is in the [examples](examples) folder.
+
+As long as this interface is respected you can use any Hooks as an alternative to the component local state.
+
