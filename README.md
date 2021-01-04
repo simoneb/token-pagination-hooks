@@ -10,22 +10,21 @@ React Hooks library to use classic pagination in a frontend, based on page numbe
 
 <!-- toc -->
 
-- [token-pagination-hooks](#token-pagination-hooks)
-  - [Setup](#setup)
-  - [Quickstart](#quickstart)
-    - [Backend](#backend)
-    - [Frontend](#frontend)
-  - [Running the examples](#running-the-examples)
-  - [API](#api)
-  - [Usage](#usage)
-    - [Token update](#token-update)
-      - [Declarative](#declarative)
-      - [Imperative](#imperative)
-    - [Modes](#modes)
-      - [Controlled](#controlled)
-      - [Uncontrolled](#uncontrolled)
-    - [Persistence](#persistence)
-      - [A working example](#a-working-example)
+- [Setup](#setup)
+- [Quickstart](#quickstart)
+  * [Backend](#backend)
+  * [Frontend](#frontend)
+- [Running the examples](#running-the-examples)
+- [API](#api)
+- [Usage](#usage)
+  * [Token update](#token-update)
+    + [Declarative](#declarative)
+    + [Imperative](#imperative)
+  * [Modes](#modes)
+    + [Controlled](#controlled)
+    + [Uncontrolled](#uncontrolled)
+  * [Persistence](#persistence)
+    + [A working example](#a-working-example)
 
 <!-- tocstop -->
 
