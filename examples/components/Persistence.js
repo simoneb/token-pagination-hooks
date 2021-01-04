@@ -6,7 +6,7 @@ function makeStateHookFactory(prefix) {
 
     return function useSessionStorageState(initializer) {
       const result = useState(
-        JSON.parse(sessionStorage.getItem(id) || 'null') || initializer
+        JSON.parse(sessionStorage.getItem(id) || 'null') ?? initializer
       )
 
       const [state] = result
@@ -19,6 +19,8 @@ function makeStateHookFactory(prefix) {
     }
   }
 }
+
+const stateHookFactory = makeStateHookFactory('persistence')
 
 function Persistence() {
   const {
@@ -34,7 +36,7 @@ function Persistence() {
       defaultPageNumber: 1,
       defaultPageSize: 5,
     },
-    makeStateHookFactory('persistence')
+    stateHookFactory
   )
   const [data, setData] = useState()
 
