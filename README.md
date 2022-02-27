@@ -1,3 +1,5 @@
+> The license of this software has changed to AWISC - Anti War ISC License
+
 # token-pagination-hooks
 
 ![ci](https://github.com/simoneb/token-pagination-hooks/workflows/ci/badge.svg)
